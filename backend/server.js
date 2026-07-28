@@ -7,8 +7,6 @@ import questionRouter from "./routes/questionRoutes.js"
 import resultRouter from "./routes/resultRoutes.js"
 import authRouter from "./routes/authRoutes.js"
 import dotenv from "dotenv"
-import dns from 'node:dns';
-dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 dotenv.config();
 const app = express()
