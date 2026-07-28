@@ -1,0 +1,50 @@
+import Quiz from "../models/quiz.js"
+
+export const getAllQuiz = async (req, res) => {
+
+        try {
+                const data = await Quiz.find().populate("createdBy");
+                console.log(data)
+                res.status(200).json(data);
+        }
+        catch (err) {
+                res.status(500).json({ message: "Error while fetching Quiz", error: err.message });
+        }
+
+}
+
+export const getQuizById = async (req, res) => {
+        try {
+                const { id } = req.params;
+                const data = await Quiz.findById(id);
+                console.log(data);
+                res.status(200).json(data);
+        } catch (err) {
+                res.status(500).json({ message: "Error while fetching Quiz", error: err.message });
+        }
+}
+
+export const addQuiz = async (req, res) => {
+        try {
+                const a = await req.body;
+                const quiz = new Quiz(a)
+                const data = await quiz.save();
+                console.log(data);
+                res.status(200).json(data);
+
+        } catch (err) {
+                res.status(500).json({ message: "Error while adding quiz", error: err.message });
+
+        }
+}
+
+export const deleteQuiz = async (req, res) => {
+        try {
+                const { id } = req.params;
+                await Quiz.findByIdAndDelete(id);
+                // Optionally delete all related questions and results
+                res.status(200).json({ message: "Quiz deleted successfully" });
+        } catch (err) {
+                res.status(500).json({ message: "Error while deleting quiz", error: err.message });
+        }
+}
